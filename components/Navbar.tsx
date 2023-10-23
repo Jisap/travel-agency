@@ -1,10 +1,19 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import { NAV_LINKS } from "@/constants"
 import Button from "./Button"
+import { useState } from "react"
+import { RiMenu4Fill, RiCloseFill } from 'react-icons/ri';
+import NavMobile from "./NavMobile"
 
 
 const Navbar = () => {
+
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+
+
   return (
     <nav className="flexBetween max-container padding-container relative z-30 py-5">
       <Link href="/">
@@ -34,13 +43,17 @@ const Navbar = () => {
           />
       </div>
 
-      <Image 
-        src="menu.svg"
-        alt="menu"
-        width={32}
-        height={32}
-        className="inline-block cursor-pointer lg:hidden"
-      />
+      <div
+        className="lg:hidden absolute right-4" 
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        { 
+          mobileMenuOpen 
+            ? <RiCloseFill className="text-5xl cursor-pointer"/>
+            : <RiMenu4Fill className="text-5xl cursor-pointer"/>
+        }
+      </div>
+
+      <NavMobile navMobile={mobileMenuOpen}/>
 
     </nav>
   )
